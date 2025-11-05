@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  # Laravel環境
+  laravel:
+    image: php:8.2-apache
+    container_name: laravel-lessons
+    ports:
+      - "8000:80"
+    volumes:
+      - ../laravel-lessons:/var/www/html
+      - ./laravel/apache.conf:/etc/apache2/sites-available/000-default.conf
+      - ./laravel/php.ini:/usr/local/etc/php/php.ini
+    working_dir: /var/www/html
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
+    command: >
+      bash -c "
+      apt-get update &&
+      apt-get install -y libzip-dev zip git &&
+      docker-php-ext-install pdo pdo_mysql zip &&
+      a2enmod rewrite &&
+      apache2-foreground
+      "
+    depends_on:
+      - mysql
+    networks:
+      - lesson-network
+
+  # MySQL データベース（Laravel用）
+  mysql:
+    image: mysql:8.0
+    container_name: laravel-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel_lessons
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - lesson-network
+
+  # phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: root
+    depends_on:
+      - mysql
+    networks:
+      - lesson-network
+
+  # React環境
+  react:
+    image: node:18-alpine
+    container_name: react-lessons
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../react-lessons:/app
+    working_dir: /app
+    command: sh -c "if [ -f package.json ]; then npm install && npm start; else tail -f /dev/null; fi"
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - lesson-network
+
+volumes:
+  mysql-data:
+
+networks:
+  lesson-network:
+    driver: bridge
