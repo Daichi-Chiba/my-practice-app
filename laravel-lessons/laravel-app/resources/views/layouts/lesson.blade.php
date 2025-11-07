@@ -11,9 +11,14 @@
     @stack('head')
 </head>
 <body class="@yield('body-class', 'lesson')">
-    <div class="lesson__container">
-        @yield('content')
-    </div>
+    @include('layouts.partials.site-nav')
+
+    <main class="lesson-main" id="top">
+        <div class="lesson__container">
+            @yield('content')
+        </div>
+    </main>
+
     @stack('scripts')
 </body>
 </html>

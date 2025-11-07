@@ -1,0 +1,17 @@
+@mixin card($background: var(--color-surface), $border: var(--color-border)) {
+  background: $background;
+  border: 1px solid $border;
+  border-radius: var(--radius-lg);
+  padding: var(--gap-md);
+}
+
+@mixin flex-row($gap: 1rem, $align: center, $justify: flex-start) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  gap: $gap;
+}
+
+@mixin text-muted {
+  color: var(--color-text-muted);
+}

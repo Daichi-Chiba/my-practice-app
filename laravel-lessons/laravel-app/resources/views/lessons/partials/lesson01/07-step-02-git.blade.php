@@ -1,4 +1,4 @@
-<section class="lesson-section lesson-section--git">
+  <section class="lesson-section lesson-section--git">
   <h2 class="lesson-section__title"><i data-lucide="git-branch"></i> ステップ2: Git / GitHub Flow</h2>
 
   <h3 class="lesson-section__subtitle">2-1. ブランチ作成〜PR</h3>

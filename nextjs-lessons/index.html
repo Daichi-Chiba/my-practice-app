@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next.js レッスン</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        .lessons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .lesson-card {
+            background: #111;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+        .lesson-card h3 {
+            margin-top: 0;
+        }
+        a {
+            color: #0070f3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>▲ Next.js レッスン</h1>
+        <p>全10レッスンでNext.jsをマスターします</p>
+        
+        <div class="lessons">
+            <div class="lesson-card">
+                <h3>Lesson 01</h3>
+                <p>Next.js基礎とファイルベースルーティング</p>
+            </div>
+            <div class="lesson-card">
+                <h3>Lesson 02</h3>
+                <p>データフェッチング戦略</p>
+            </div>
+            <div class="lesson-card">
+                <h3>Lesson 03</h3>
+                <p>App Router と Server Components</p>
+            </div>
+            <div class="lesson-card">
+                <h3>Lesson 04</h3>
+                <p>API Routes とバックエンド開発</p>
+            </div>
+            <div class="lesson-card">
+                <h3>Lesson 05</h3>
+                <p>認証とセキュリティ</p>
+            </div>
+            <div class="lesson-card">
+                <h3>Lesson 06</h3>
+                <p>SEO最適化</p>
+            </div>
+            <div class="lesson-card">
+                <h3>Lesson 07</h3>
+                <p>画像・フォント最適化</p>
+            </div>
+            <div class="lesson-card">
+                <h3>Lesson 08</h3>
+                <p>国際化（i18n）</p>
+            </div>
+            <div class="lesson-card">
+                <h3>Lesson 09</h3>
+                <p>パフォーマンスとモニタリング</p>
+            </div>
+            <div class="lesson-card">
+                <h3>Lesson 10</h3>
+                <p>デプロイと本番環境</p>
+            </div>
+        </div>
+        
+        <p style="margin-top: 3rem;">
+            <a href="../dashboard.html">← ダッシュボードに戻る</a>
+        </p>
+    </div>
+</body>
+</html>

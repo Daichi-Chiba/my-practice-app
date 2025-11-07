@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学習ダッシュボード - プログラミング学習プラットフォーム</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #333 0%, #555 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            border: 2px solid #2a2a2a;
+        }
+        
+        .user-info h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .user-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            background: #0a0a0a;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover {
+            background: #1a1a1a;
+            border-color: #3a3a3a;
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #333 0%, #555 100%);
+            border-color: #444;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #444 0%, #666 100%);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .stat-card:hover {
+            border-color: #2a2a2a;
+            transform: translateY(-3px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        .course-card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+        
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--course-color);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(135deg, var(--course-bg-dark) 0%, var(--course-bg-darker) 100%);
+            border-color: var(--course-color);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
+                        0 0 40px var(--course-glow),
+                        inset 0 0 60px var(--course-glow);
+        }
+        
+        .course-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .course-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .course-icon {
+            font-size: 3rem;
+            color: var(--course-color);
+            transition: transform 0.3s;
+        }
+        
+        .course-card:hover .course-icon {
+            transform: scale(1.1);
+        }
+        
+        .nextjs .course-icon {
+            width: 48px;
+            height: 48px;
+        }
+        
+        .nextjs .course-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: #ffffff;
+        }
+        
+        .course-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--course-color);
+        }
+        
+        .progress-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        .progress-percentage {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--course-color);
+        }
+        
+        .progress-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .lesson-info {
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        
+        /* 各コースの色 */
+        .laravel {
+            --course-color: #ff2d20;
+            --course-glow: rgba(255, 45, 32, 0.3);
+            --course-bg-dark: rgba(255, 45, 32, 0.15);
+            --course-bg-darker: rgba(139, 20, 14, 0.2);
+        }
+        .react {
+            --course-color: #61dafb;
+            --course-glow: rgba(97, 218, 251, 0.3);
+            --course-bg-dark: rgba(97, 218, 251, 0.12);
+            --course-bg-darker: rgba(32, 116, 132, 0.18);
+        }
+        .nextjs {
+            --course-color: #ffffff;
+            --course-glow: rgba(255, 255, 255, 0.2);
+            --course-bg-dark: rgba(255, 255, 255, 0.08);
+            --course-bg-darker: rgba(100, 100, 100, 0.15);
+        }
+        .java {
+            --course-color: #007396;
+            --course-glow: rgba(0, 115, 150, 0.3);
+            --course-bg-dark: rgba(0, 115, 150, 0.15);
+            --course-bg-darker: rgba(0, 60, 80, 0.2);
+        }
+        .rails {
+            --course-color: #cc0000;
+            --course-glow: rgba(204, 0, 0, 0.3);
+            --course-bg-dark: rgba(204, 0, 0, 0.15);
+            --course-bg-darker: rgba(100, 0, 0, 0.2);
+        }
+        .vue {
+            --course-color: #42b883;
+            --course-glow: rgba(66, 184, 131, 0.3);
+            --course-bg-dark: rgba(66, 184, 131, 0.12);
+            --course-bg-darker: rgba(35, 95, 68, 0.18);
+        }
+        .js {
+            --course-color: #f7df1e;
+            --course-glow: rgba(247, 223, 30, 0.3);
+            --course-bg-dark: rgba(247, 223, 30, 0.1);
+            --course-bg-darker: rgba(150, 135, 18, 0.15);
+        }
+        .docker {
+            --course-color: #0db7ed;
+            --course-glow: rgba(13, 183, 237, 0.3);
+            --course-bg-dark: rgba(13, 183, 237, 0.12);
+            --course-bg-darker: rgba(8, 95, 123, 0.18);
+        }
+        .git {
+            --course-color: #f05032;
+            --course-glow: rgba(240, 80, 50, 0.3);
+            --course-bg-dark: rgba(240, 80, 50, 0.15);
+            --course-bg-darker: rgba(120, 40, 25, 0.2);
+        }
+        .sql {
+            --course-color: #00758f;
+            --course-glow: rgba(0, 117, 143, 0.3);
+            --course-bg-dark: rgba(0, 117, 143, 0.15);
+            --course-bg-darker: rgba(0, 60, 75, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="user-section">
+                <div class="avatar" id="avatar">?</div>
+                <div class="user-info">
+                    <h2 id="username">ゲスト</h2>
+                    <p id="userEmail">ログインして進捗を保存</p>
+                </div>
+            </div>
+            <div class="auth-buttons" id="authButtons">
+                <button class="btn btn-primary" onclick="showLoginModal()">ログイン</button>
+                <a href="index.html" class="btn">← TOPへ戻る</a>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number" id="totalCourses">10</span>
+                <span class="stat-label">総コース数</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="completedCourses">0</span>
+                <span class="stat-label">完了コース</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="totalLessons">100</span>
+                <span class="stat-label">総レッスン数</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="completedLessons">0</span>
+                <span class="stat-label">完了レッスン</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="overallProgress">0%</span>
+                <span class="stat-label">全体進捗率</span>
+            </div>
+        </div>
+
+        <h2 class="section-title">コース進捗</h2>
+        <div class="courses-grid" id="coursesGrid">
+            <!-- JavaScriptで動的に生成 -->
+        </div>
+    </div>
+
+    <script>
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+
+        const courses = [
+            { id: 1, name: 'Laravel', slug: 'laravel', icon: 'devicon-laravel-plain', color: 'laravel', url: 'http://localhost:8001' },
+            { id: 2, name: 'React', slug: 'react', icon: 'devicon-react-original', color: 'react', url: 'http://localhost:3001' },
+            { id: 3, name: 'Next.js', slug: 'nextjs', icon: 'nextjs-svg', color: 'nextjs', url: 'http://localhost:3002' },
+            { id: 4, name: 'Java', slug: 'java', icon: 'devicon-java-plain', color: 'java', url: 'http://localhost:8082' },
+            { id: 5, name: 'Rails', slug: 'rails', icon: 'devicon-rails-plain', color: 'rails', url: 'http://localhost:3003' },
+            { id: 6, name: 'Vue.js', slug: 'vue', icon: 'devicon-vuejs-plain', color: 'vue', url: 'http://localhost:3004' },
+            { id: 7, name: 'JavaScript/TS', slug: 'js-ts', icon: 'devicon-javascript-plain', color: 'js', url: '#' },
+            { id: 8, name: 'Docker', slug: 'docker', icon: 'devicon-docker-plain', color: 'docker', url: '#' },
+            { id: 9, name: 'Git', slug: 'git', icon: 'devicon-git-plain', color: 'git', url: '#' },
+            { id: 10, name: 'SQL', slug: 'sql', icon: 'devicon-mysql-plain', color: 'sql', url: '#' },
+        ];
+
+        function showLoginModal() {
+            const username = prompt('ユーザー名を入力してください:');
+            if (username) {
+                currentUser = { 
+                    id: Date.now(), 
+                    username: username, 
+                    email: `${username}@example.com` 
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateUI();
+            }
+        }
+
+        function logout() {
+            if (confirm('ログアウトしますか？')) {
+                currentUser = null;
+                localStorage.removeItem('currentUser');
+                updateUI();
+            }
+        }
+
+        function updateUI() {
+            const avatar = document.getElementById('avatar');
+            const username = document.getElementById('username');
+            const userEmail = document.getElementById('userEmail');
+            const authButtons = document.getElementById('authButtons');
+
+            if (currentUser) {
+                avatar.textContent = currentUser.username.charAt(0).toUpperCase();
+                username.textContent = currentUser.username;
+                userEmail.textContent = currentUser.email;
+                authButtons.innerHTML = `
+                    <button class="btn" onclick="logout()">ログアウト</button>
+                    <a href="index.html" class="btn">← TOPへ戻る</a>
+                `;
+            } else {
+                avatar.textContent = '?';
+                username.textContent = 'ゲスト';
+                userEmail.textContent = 'ログインして進捗を保存';
+                authButtons.innerHTML = `
+                    <button class="btn btn-primary" onclick="showLoginModal()">ログイン</button>
+                    <a href="index.html" class="btn">← TOPへ戻る</a>
+                `;
+            }
+
+            loadProgress();
+        }
+
+        function getProgress() {
+            if (!currentUser) return {};
+            return JSON.parse(localStorage.getItem(`progress_${currentUser.id}`)) || {};
+        }
+
+        function calculateCourseProgress(courseId) {
+            const progress = getProgress();
+            const courseProgress = progress[courseId] || {};
+            const completed = Object.values(courseProgress).filter(v => v).length;
+            const total = 10;
+            return {
+                completed,
+                total,
+                percentage: Math.round((completed / total) * 100)
+            };
+        }
+
+        function createProgressChart(canvasId, percentage, color) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [percentage, 100 - percentage],
+                        backgroundColor: [color, '#1a1a1a'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    }
+                }
+            });
+        }
+
+        function getNextjsSVG() {
+            return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="95" fill="none" stroke="white" stroke-width="3"/>
+                <text x="100" y="110" text-anchor="middle" fill="white" font-size="32" font-family="Arial, sans-serif" font-weight="bold" letter-spacing="2">NEXT.JS</text>
+            </svg>`;
+        }
+
+        function loadProgress() {
+            const coursesGrid = document.getElementById('coursesGrid');
+            coursesGrid.innerHTML = '';
+
+            let totalCompleted = 0;
+            let completedCoursesCount = 0;
+
+            courses.forEach(course => {
+                const courseProgress = calculateCourseProgress(course.id);
+                totalCompleted += courseProgress.completed;
+                if (courseProgress.percentage === 100) completedCoursesCount++;
+
+                const card = document.createElement('a');
+                card.href = course.url;
+                card.target = '_blank';
+                card.className = `course-card ${course.color}`;
+                
+                const iconHTML = course.icon === 'nextjs-svg' 
+                    ? `<div class="course-icon">${getNextjsSVG()}</div>`
+                    : `<i class="${course.icon} course-icon"></i>`;
+
+                card.innerHTML = `
+                    <div class="course-header">
+                        ${iconHTML}
+                        <h3 class="course-title">${course.name}</h3>
+                    </div>
+                    <div class="progress-container">
+                        <canvas id="chart_${course.id}"></canvas>
+                        <div class="progress-text">
+                            <div class="progress-percentage">${courseProgress.percentage}%</div>
+                            <div class="progress-label">完了</div>
+                        </div>
+                    </div>
+                    <div class="lesson-info">
+                        ${courseProgress.completed} / ${courseProgress.total} レッスン完了
+                    </div>
+                `;
+                
+                coursesGrid.appendChild(card);
+
+                setTimeout(() => {
+                    const colorMap = {
+                        laravel: '#ff2d20',
+                        react: '#61dafb',
+                        nextjs: '#ffffff',
+                        java: '#007396',
+                        rails: '#cc0000',
+                        vue: '#42b883',
+                        js: '#f7df1e',
+                        docker: '#0db7ed',
+                        git: '#f05032',
+                        sql: '#00758f'
+                    };
+                    createProgressChart(`chart_${course.id}`, courseProgress.percentage, colorMap[course.color]);
+                }, 0);
+            });
+
+            // 統計更新
+            document.getElementById('totalCourses').textContent = courses.length;
+            document.getElementById('completedCourses').textContent = completedCoursesCount;
+            document.getElementById('totalLessons').textContent = courses.length * 10;
+            document.getElementById('completedLessons').textContent = totalCompleted;
+            document.getElementById('overallProgress').textContent = 
+                Math.round((totalCompleted / (courses.length * 10)) * 100) + '%';
+        }
+
+        // 初期化
+        updateUI();
+    </script>
+</body>
+</html>

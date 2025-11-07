@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Template - Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* ヘッダー */
+        .lesson-header {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: #888;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            color: #fff;
+        }
+        
+        .lesson-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #333 0%, #555 100%);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .lesson-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #888;
+        }
+        
+        .meta-item svg {
+            width: 18px;
+            height: 18px;
+        }
+        
+        /* セクション */
+        .section {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        h2 svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin: 2rem 0 1rem;
+            color: #ddd;
+        }
+        
+        p {
+            color: #aaa;
+            margin-bottom: 1rem;
+        }
+        
+        /* リスト */
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+            color: #aaa;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* コードブロック */
+        pre {
+            background: #050505 !important;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 1.5rem !important;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+        
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        :not(pre) > code {
+            background: #1a1a1a;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: #61dafb;
+        }
+        
+        /* ポイントボックス */
+        .point-box {
+            background: linear-gradient(135deg, rgba(97, 218, 251, 0.1) 0%, rgba(32, 116, 132, 0.1) 100%);
+            border-left: 4px solid #61dafb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .point-box h4 {
+            color: #61dafb;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 45, 32, 0.1) 0%, rgba(139, 20, 14, 0.1) 100%);
+            border-left: 4px solid #ff2d20;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .warning-box h4 {
+            color: #ff2d20;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .success-box {
+            background: linear-gradient(135deg, rgba(66, 184, 131, 0.1) 0%, rgba(35, 95, 68, 0.1) 100%);
+            border-left: 4px solid #42b883;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .success-box h4 {
+            color: #42b883;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* 演習問題 */
+        .exercise {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            border: 2px dashed #2a2a2a;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .exercise-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        /* ボタン */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #333 0%, #555 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid #444;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(135deg, #444 0%, #666 100%);
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #7c8ef0 0%, #8b5bb5 100%);
+        }
+        
+        /* ナビゲーション */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        
+        /* タグ */
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        
+        .tag {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .tag.primary {
+            background: rgba(97, 218, 251, 0.1);
+            border-color: #61dafb;
+            color: #61dafb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <div class="lesson-header">
+            <div class="breadcrumb">
+                <a href="/">トップ</a>
+                <span>></span>
+                <a href="#">Laravel</a>
+                <span>></span>
+                <span>Lesson 01</span>
+            </div>
+            
+            <div class="lesson-number">Lesson 01</div>
+            <h1>開発環境構築と実務の基礎</h1>
+            <p style="color: #888; font-size: 1.1rem;">プロジェクトのセットアップから実務フローまで</p>
+            
+            <div class="lesson-meta">
+                <div class="meta-item">
+                    <i data-lucide="clock"></i>
+                    <span>所要時間: 3-4時間</span>
+                </div>
+                <div class="meta-item">
+                    <i data-lucide="bar-chart"></i>
+                    <span>難易度: 初級</span>
+                </div>
+                <div class="meta-item">
+                    <i data-lucide="users"></i>
+                    <span>実務レベル: 必須</span>
+                </div>
+            </div>
+            
+            <div class="tags">
+                <span class="tag primary">Docker</span>
+                <span class="tag primary">Git</span>
+                <span class="tag">環境構築</span>
+                <span class="tag">チーム開発</span>
+            </div>
+        </div>
+
+        <!-- 学習目標 -->
+        <div class="section">
+            <h2>
+                <i data-lucide="target"></i>
+                学習目標
+            </h2>
+            <ul>
+                <li>Docker環境でLaravelプロジェクトをセットアップできる</li>
+                <li>Gitを使った基本的なバージョン管理ができる</li>
+                <li>プルリクエストの流れを理解する</li>
+                <li>環境変数とセキュリティの基本を学ぶ</li>
+                <li>デバッグツールの使い方をマスターする</li>
+            </ul>
+        </div>
+
+        <!-- 実務での重要性 -->
+        <div class="section">
+            <h2>
+                <i data-lucide="briefcase"></i>
+                実務での重要性
+            </h2>
+            <p>
+                環境構築は開発の第一歩です。特にSES出向先では、プロジェクトごとに異なる環境で開発することが多く、
+                素早く環境をセットアップできるスキルが求められます。
+            </p>
+            
+            <div class="point-box">
+                <h4><i data-lucide="lightbulb"></i> 実務ポイント</h4>
+                <p>
+                    占いWebアプリのような既存プロジェクトに参画する場合、まず行うのが環境構築です。
+                    Dockerを使うことで「私の環境では動きます」問題を防ぎ、チーム全員が同じ環境で開発できます。
+                </p>
+            </div>
+        </div>
+
+        <!-- 学習内容 -->
+        <div class="section">
+            <h2>
+                <i data-lucide="book-open"></i>
+                学習内容
+            </h2>
+            
+            <h3>1. Docker環境のセットアップ</h3>
+            <p>Dockerを使ってLaravel開発環境を構築します。</p>
+            
+            <pre><code class="language-yaml"># docker-compose.yml
+version: '3.8'
+
+services:
+  app:
+    image: php:8.2-fpm
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - DB_HOST=mysql
+      - DB_DATABASE=fortune_app
+      
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: fortune_app
+      MYSQL_ROOT_PASSWORD: secret
+    ports:
+      - "3306:3306"
+</code></pre>
+
+            <div class="warning-box">
+                <h4><i data-lucide="alert-triangle"></i> 注意点</h4>
+                <p>
+                    本番環境のパスワードは絶対にGitにコミットしないでください。
+                    開発環境でも、.envファイルは.gitignoreに追加しましょう。
+                </p>
+            </div>
+
+            <h3>2. Gitでのバージョン管理</h3>
+            <p>チーム開発に必須のGit操作を学びます。</p>
+            
+            <pre><code class="language-bash"># ブランチを作成して切り替え
+git checkout -b feature/add-fortune-calculation
+
+# 変更をステージング
+git add .
+
+# コミット（わかりやすいメッセージで）
+git commit -m "feat: 占い結果計算ロジックを追加"
+
+# リモートにプッシュ
+git push origin feature/add-fortune-calculation
+</code></pre>
+
+            <div class="success-box">
+                <h4><i data-lucide="check-circle"></i> ベストプラクティス</h4>
+                <p>
+                    コミットメッセージは「何を」「なぜ」したのかを明確に。
+                    Conventional Commits（feat:, fix:, docs: など）を使うとチームで統一しやすくなります。
+                </p>
+            </div>
+
+            <h3>3. 環境変数の管理</h3>
+            <p>.envファイルで機密情報を管理します。</p>
+            
+            <pre><code class="language-bash"># .env.example（Gitにコミット OK）
+APP_NAME=FortuneApp
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=fortune_app
+DB_USERNAME=root
+DB_PASSWORD=secret  # 本番では変更必須！
+</code></pre>
+        </div>
+
+        <!-- 演習問題 -->
+        <div class="section">
+            <h2>
+                <i data-lucide="pen-tool"></i>
+                演習問題
+            </h2>
+            
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-number">1</div>
+                    <h3 style="margin: 0;">環境構築の実践</h3>
+                </div>
+                <p>以下の手順で開発環境を構築してください：</p>
+                <ol>
+                    <li>Dockerをインストール</li>
+                    <li>Laravelプロジェクトをクローン</li>
+                    <li>docker-compose upでコンテナ起動</li>
+                    <li>.env.exampleを.envにコピーして設定</li>
+                    <li>ブラウザでhttp://localhost:8000にアクセス</li>
+                </ol>
+            </div>
+
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-number">2</div>
+                    <h3 style="margin: 0;">Gitブランチ操作</h3>
+                </div>
+                <p>新機能開発のシミュレーション：</p>
+                <ol>
+                    <li>feature/user-profile ブランチを作成</li>
+                    <li>routes/web.phpに新しいルートを追加</li>
+                    <li>変更をコミット</li>
+                    <li>mainブランチにマージ</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- 確認問題 -->
+        <div class="section">
+            <h2>
+                <i data-lucide="help-circle"></i>
+                確認問題
+            </h2>
+            <ol>
+                <li>Dockerを使うメリットを3つ挙げてください</li>
+                <li>.envファイルをGitにコミットしてはいけない理由は？</li>
+                <li>git pullとgit fetchの違いを説明してください</li>
+                <li>コンフリクトが発生した時の対処法は？</li>
+            </ol>
+            
+            <details style="margin-top: 1rem; padding: 1rem; background: #0a0a0a; border-radius: 8px;">
+                <summary style="cursor: pointer; color: #61dafb;">解答を表示</summary>
+                <div style="margin-top: 1rem; padding: 1rem; background: #050505; border-radius: 8px;">
+                    <p><strong>1. Dockerのメリット：</strong></p>
+                    <ul>
+                        <li>環境の統一（全員が同じ環境で開発できる）</li>
+                        <li>セットアップが簡単（docker-compose upだけ）</li>
+                        <li>本番環境との差異を減らせる</li>
+                    </ul>
+                    <p><strong>2. .envファイルの理由：</strong></p>
+                    <p>パスワードやAPIキーなどの機密情報が含まれるため、公開リポジトリに上げると情報漏洩のリスクがあります。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 参考資料 -->
+        <div class="section">
+            <h2>
+                <i data-lucide="link"></i>
+                参考資料
+            </h2>
+            <ul>
+                <li><a href="https://laravel.com/docs" style="color: #61dafb;">Laravel公式ドキュメント</a></li>
+                <li><a href="https://docs.docker.com" style="color: #61dafb;">Docker公式ドキュメント</a></li>
+                <li><a href="https://git-scm.com/book/ja/v2" style="color: #61dafb;">Pro Git Book（日本語版）</a></li>
+            </ul>
+        </div>
+
+        <!-- ナビゲーション -->
+        <div class="lesson-nav">
+            <a href="#" class="btn">
+                <i data-lucide="arrow-left"></i>
+                前のレッスン
+            </a>
+            <a href="#" class="btn btn-primary">
+                次のレッスン
+                <i data-lucide="arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Syntax highlighting
+        hljs.highlightAll();
+        
+        // Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

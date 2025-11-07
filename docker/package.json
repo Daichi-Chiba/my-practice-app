@@ -1,0 +1,8 @@
+{
+  "name": "my-practice-app-docker-runner",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix ../laravel-lessons/laravel-app run build",
+    "watch": "npm --prefix ../laravel-lessons/laravel-app run watch"
+  }
+}

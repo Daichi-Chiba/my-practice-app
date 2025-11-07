@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プログラミング学習プラットフォーム</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 4rem;
+        }
+        
+        header h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 1s ease;
+        }
+        
+        header p {
+            font-size: 1.5rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .course-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            animation: fadeInUp 1s ease both;
+        }
+        
+        .course-card:nth-child(1) { animation-delay: 0.1s; }
+        .course-card:nth-child(2) { animation-delay: 0.2s; }
+        .course-card:nth-child(3) { animation-delay: 0.3s; }
+        .course-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        .course-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+        }
+        
+        .course-header {
+            padding: 2.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .course-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+        
+        .course-card:hover .course-header::before {
+            top: -100%;
+            right: -100%;
+        }
+        
+        .laravel { background: linear-gradient(135deg, #ff2d20 0%, #ff6b6b 100%); }
+        .react { background: linear-gradient(135deg, #61dafb 0%, #4fa3d1 100%); }
+        .nextjs { background: linear-gradient(135deg, #000000 0%, #434343 100%); }
+        .java { background: linear-gradient(135deg, #007396 0%, #00a8cc 100%); }
+        
+        .course-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .course-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .course-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .course-body {
+            padding: 2rem;
+        }
+        
+        .course-description {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+        
+        .course-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .course-topics {
+            margin-bottom: 1.5rem;
+        }
+        
+        .course-topics h4 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .topics-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+        
+        .topic-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        
+        .start-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .start-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .features {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+        
+        .features h2 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            opacity: 0.9;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .topics-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+                <div class="course-header laravel">
+                    <span class="course-icon">🔴</span>
+                    <h2 class="course-title">Laravel</h2>
+                    <p class="course-subtitle">PHPの最強フレームワーク</p>
+                </div>
+                <div class="course-body">
+                    <p class="course-description">
+                        Laravelの基礎から応用まで、MVCアーキテクチャ、Eloquent ORM、
+                        認証・認可、API開発、テスト駆動開発まで網羅的に学習します。
+                    </p>
+                    <div class="course-stats">
+                        <div class="stat">
+                            <span class="stat-number">10</span>
+                            <span class="stat-label">レッスン</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">初級〜上級</span>
+                            <span class="stat-label">レベル</span>
+                        </div>
+                    </div>
+                    <div class="course-topics">
+                        <h4>📚 学習トピック</h4>
+                        <div class="topics-list">
+                            <div class="topic-tag">ルーティング</div>
+                            <div class="topic-tag">Eloquent ORM</div>
+                            <div class="topic-tag">認証・認可</div>
+                            <div class="topic-tag">API開発</div>
+                            <div class="topic-tag">テスト</div>
+                            <div class="topic-tag">デプロイ</div>
+                        </div>
+                    </div>
+                    <div class="start-button">学習を開始 →</div>
+                </div>
+            </a>
+            
+            <!-- React Course -->
+            <a href="http://localhost:3001" class="course-card" target="_blank">
+                <div class="course-header react">
+                    <span class="course-icon">⚛️</span>
+                    <h2 class="course-title">React</h2>
+                    <p class="course-subtitle">モダンUIライブラリ</p>
+                </div>
+                <div class="course-body">
+                    <p class="course-description">
+                        Reactの基礎からフック、状態管理、パフォーマンス最適化、
+                        カスタムフック、TypeScript統合まで実践的に学習します。
+                    </p>
+                    <div class="course-stats">
+                        <div class="stat">
+                            <span class="stat-number">10</span>
+                            <span class="stat-label">レッスン</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">初級〜上級</span>
+                            <span class="stat-label">レベル</span>
+                        </div>
+                    </div>
+                    <div class="course-topics">
+                        <h4>📚 学習トピック</h4>
+                        <div class="topics-list">
+                            <div class="topic-tag">JSX & Components</div>
+                            <div class="topic-tag">Hooks</div>
+                            <div class="topic-tag">Context API</div>
+                            <div class="topic-tag">Redux</div>
+                            <div class="topic-tag">Performance</div>
+                            <div class="topic-tag">TypeScript</div>
+                        </div>
+                    </div>
+                    <div class="start-button">学習を開始 →</div>
+                </div>
+            </a>
+            
+            <!-- Next.js Course -->
+            <a href="http://localhost:3002" class="course-card" target="_blank">
+                <div class="course-header nextjs">
+                    <span class="course-icon">▲</span>
+                    <h2 class="course-title">Next.js</h2>
+                    <p class="course-subtitle">Reactフルスタックフレームワーク</p>
+                </div>
+                <div class="course-body">
+                    <p class="course-description">
+                        Next.jsでSSR/SSG、API Routes、認証、データフェッチング、
+                        SEO最適化、デプロイまで本格的なアプリ開発を学習します。
+                    </p>
+                    <div class="course-stats">
+                        <div class="stat">
+                            <span class="stat-number">10</span>
+                            <span class="stat-label">レッスン</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">中級〜上級</span>
+                            <span class="stat-label">レベル</span>
+                        </div>
+                    </div>
+                    <div class="course-topics">
+                        <h4>📚 学習トピック</h4>
+                        <div class="topics-list">
+                            <div class="topic-tag">SSR/SSG</div>
+                            <div class="topic-tag">API Routes</div>
+                            <div class="topic-tag">認証</div>
+                            <div class="topic-tag">SEO</div>
+                            <div class="topic-tag">App Router</div>
+                            <div class="topic-tag">Vercel</div>
+                        </div>
+                    </div>
+                    <div class="start-button">学習を開始 →</div>
+                </div>
+            </a>
+            
+            <!-- Java Course -->
+            <a href="http://localhost:8080/java" class="course-card" target="_blank">
+                <div class="course-header java">
+                    <span class="course-icon">☕</span>
+                    <h2 class="course-title">Java</h2>
+                    <p class="course-subtitle">エンタープライズ開発の基盤</p>
+                </div>
+                <div class="course-body">
+                    <p class="course-description">
+                        Java基礎からOOP、Spring Boot、JPA/Hibernate、
+                        マイクロサービス、デザインパターンまで実務レベルを習得します。
+                    </p>
+                    <div class="course-stats">
+                        <div class="stat">
+                            <span class="stat-number">10</span>
+                            <span class="stat-label">レッスン</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">初級〜上級</span>
+                            <span class="stat-label">レベル</span>
+                        </div>
+                    </div>
+                    <div class="course-topics">
+                        <h4>📚 学習トピック</h4>
+                        <div class="topics-list">
+                            <div class="topic-tag">OOP</div>
+                            <div class="topic-tag">Spring Boot</div>
+                            <div class="topic-tag">JPA/Hibernate</div>
+                            <div class="topic-tag">REST API</div>
+                            <div class="topic-tag">デザインパターン</div>
+                            <div class="topic-tag">テスト</div>
+                        </div>
+                    </div>
+                    <div class="start-button">学習を開始 →</div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Features Section -->
+        <div class="features">
+            <h2>✨ プラットフォームの特徴</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">📖</div>
+                    <h3 class="feature-title">体系的なカリキュラム</h3>
+                    <p class="feature-description">
+                        基礎から応用まで段階的に学べる10段階のレッスン構成
+                    </p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💼</div>
+                    <h3 class="feature-title">実務レベルの内容</h3>
+                    <p class="feature-description">
+                        業務で即使えるアルゴリズムとベストプラクティスを習得
+                    </p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🚀</div>
+                    <h3 class="feature-title">ハンズオン形式</h3>
+                    <p class="feature-description">
+                        実際にコードを書きながら学ぶ実践的な学習スタイル
+                    </p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">詳細なコード例</h3>
+                    <p class="feature-description">
+                        各トピックに豊富なコード例と解説付き
+                    </p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📝</div>
+                    <h3 class="feature-title">練習問題</h3>
+                    <p class="feature-description">
+                        理解度を確認できる演習問題と解答例を用意
+                    </p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">継続的更新</h3>
+                    <p class="feature-description">
+                        最新技術トレンドに対応した内容を随時追加
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 Programming Learning Platform. All rights reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Docker環境で動作 | Laravel, React, Next.js, Java</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プログラミング学習プラットフォーム</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 300;
+        }
+        
+        .hamburger-menu {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+        
+        .hamburger-btn {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hamburger-btn:hover {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-color: #3a3a3a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.7);
+        }
+        
+        .hamburger-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: #fff;
+            transition: all 0.3s;
+        }
+        
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 320px;
+            height: 100vh;
+            background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+            border-left: 1px solid #1a1a1a;
+            padding: 0;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+            box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
+        }
+        
+        .nav-menu.active {
+            right: 0;
+        }
+        
+        .nav-header {
+            padding: 2rem;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        
+        .nav-header h3 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-header p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 2rem;
+        }
+        
+        .nav-link {
+            color: #888;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid transparent;
+        }
+        
+        .nav-link svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+        }
+        
+        .nav-link:hover {
+            color: #fff;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-color: #2a2a2a;
+            transform: translateX(-4px);
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 998;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .course-card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
+            padding: 2.5rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--course-color);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(135deg, var(--course-bg-dark) 0%, var(--course-bg-darker) 100%);
+            border-color: var(--course-color);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
+                        0 0 40px var(--course-glow),
+                        inset 0 0 60px var(--course-glow);
+        }
+        
+        .course-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .course-card:hover .course-details {
+            opacity: 1;
+            transform: translateY(0);
+            max-height: 500px;
+        }
+        
+        .course-card:hover .course-icon {
+            transform: scale(1.1);
+        }
+        
+        .course-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            transition: transform 0.3s;
+            color: var(--course-color);
+        }
+        
+        /* Next.jsアイコンはSVG用 */
+        .nextjs .course-icon {
+            width: 64px;
+            height: 64px;
+            font-size: inherit;
+        }
+        
+        .nextjs .course-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: #ffffff;
+        }
+        
+        .course-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--course-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .course-type {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .course-details {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 0;
+            overflow: hidden;
+        }
+        
+        .lesson-count {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: #1a1a1a;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+        
+        .course-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #aaa;
+            margin-bottom: 1rem;
+        }
+        
+        .topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .topic-tag {
+            padding: 0.3rem 0.8rem;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: #999;
+        }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 2rem;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
+            margin-bottom: 4rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+        
+        .feature-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-description {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* 各コースの色 */
+        .laravel {
+            --course-color: #ff2d20;
+            --course-glow: rgba(255, 45, 32, 0.3);
+            --course-bg-dark: rgba(255, 45, 32, 0.15);
+            --course-bg-darker: rgba(139, 20, 14, 0.2);
+        }
+        .react {
+            --course-color: #61dafb;
+            --course-glow: rgba(97, 218, 251, 0.3);
+            --course-bg-dark: rgba(97, 218, 251, 0.12);
+            --course-bg-darker: rgba(32, 116, 132, 0.18);
+        }
+        .nextjs {
+            --course-color: #ffffff;
+            --course-glow: rgba(255, 255, 255, 0.2);
+            --course-bg-dark: rgba(255, 255, 255, 0.08);
+            --course-bg-darker: rgba(100, 100, 100, 0.15);
+        }
+        .java {
+            --course-color: #007396;
+            --course-glow: rgba(0, 115, 150, 0.3);
+            --course-bg-dark: rgba(0, 115, 150, 0.15);
+            --course-bg-darker: rgba(0, 60, 80, 0.2);
+        }
+        .rails {
+            --course-color: #cc0000;
+            --course-glow: rgba(204, 0, 0, 0.3);
+            --course-bg-dark: rgba(204, 0, 0, 0.15);
+            --course-bg-darker: rgba(100, 0, 0, 0.2);
+        }
+        .vue {
+            --course-color: #42b883;
+            --course-glow: rgba(66, 184, 131, 0.3);
+            --course-bg-dark: rgba(66, 184, 131, 0.12);
+            --course-bg-darker: rgba(35, 95, 68, 0.18);
+        }
+        .js {
+            --course-color: #f7df1e;
+            --course-glow: rgba(247, 223, 30, 0.3);
+            --course-bg-dark: rgba(247, 223, 30, 0.1);
+            --course-bg-darker: rgba(150, 135, 18, 0.15);
+        }
+        .docker {
+            --course-color: #0db7ed;
+            --course-glow: rgba(13, 183, 237, 0.3);
+            --course-bg-dark: rgba(13, 183, 237, 0.12);
+            --course-bg-darker: rgba(8, 95, 123, 0.18);
+        }
+        .git {
+            --course-color: #f05032;
+            --course-glow: rgba(240, 80, 50, 0.3);
+            --course-bg-dark: rgba(240, 80, 50, 0.15);
+            --course-bg-darker: rgba(120, 40, 25, 0.2);
+        }
+        .sql {
+            --course-color: #00758f;
+            --course-glow: rgba(0, 117, 143, 0.3);
+            --course-bg-dark: rgba(0, 117, 143, 0.15);
+            --course-bg-darker: rgba(0, 60, 75, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                position: static;
+                justify-content: center;
+                margin-top: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ハンバーガーメニュー -->
+    <div class="hamburger-menu">
+        <div class="hamburger-btn" onclick="toggleMenu()">
+            <i data-lucide="menu"></i>
+        </div>
+    </div>
+    
+    <!-- オーバーレイ -->
+    <div class="overlay" onclick="toggleMenu()"></div>
+    
+    <!-- ナビゲーションメニュー -->
+    <nav class="nav-menu">
+        <div class="nav-header">
+            <h3>メニュー</h3>
+            <p>Learning Platform</p>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">
+                <i data-lucide="home"></i>
+                <span>ホーム</span>
+            </a>
+            <a href="dashboard.html" class="nav-link">
+                <i data-lucide="layout-dashboard"></i>
+                <span>ダッシュボード</span>
+            </a>
+            <a href="#" class="nav-link">
+                <i data-lucide="book-open"></i>
+                <span>ドキュメント</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Learning Platform</h1>
+            <p class="subtitle">実務で使える技術を、基礎から応用まで体系的に学習</p>
+        </header>
+
+        <div class="stats-bar">
+            <div class="stat">
+                <span class="stat-number">10</span>
+                <span class="stat-label">Courses</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">100</span>
+                <span class="stat-label">Lessons</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">300+</span>
+                <span class="stat-label">Hours</span>
+            </div>
+        </div>
+
+        <div class="courses-grid">
+            <!-- Laravel -->
+            <a href="http://localhost:8001" class="course-card laravel" target="_blank">
+                <i class="devicon-laravel-plain course-icon"></i>
+                <h3 class="course-name">Laravel</h3>
+                <p class="course-type">Backend Framework</p>
+                
+                <div class="course-details">
+                    <div class="lesson-count">10 Lessons</div>
+                    <p class="course-description">
+                        PHPの最強フレームワーク。MVCアーキテクチャ、Eloquent ORM、認証・認可、
+                        API開発、テスト駆動開発まで網羅的に学習します。
+                    </p>
+                    <div class="topics">
+                        <span class="topic-tag">Routing</span>
+                        <span class="topic-tag">Eloquent</span>
+                        <span class="topic-tag">API</span>
+                        <span class="topic-tag">Auth</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- React -->
+            <a href="http://localhost:3001" class="course-card react" target="_blank">
+                <i class="devicon-react-original course-icon"></i>
+                <h3 class="course-name">React</h3>
+                <p class="course-type">Frontend Library</p>
+                
+                <div class="course-details">
+                    <div class="lesson-count">10 Lessons</div>
+                    <p class="course-description">
+                        モダンUIライブラリ。フック、状態管理、パフォーマンス最適化、
+                        TypeScript統合まで実践的に学習します。
+                    </p>
+                    <div class="topics">
+                        <span class="topic-tag">Hooks</span>
+                        <span class="topic-tag">Context</span>
+                        <span class="topic-tag">Redux</span>
+                        <span class="topic-tag">TypeScript</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Next.js -->
+            <a href="http://localhost:3002" class="course-card nextjs" target="_blank">
+                <div class="course-icon">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 白い丸 -->
+                        <circle cx="100" cy="100" r="95" fill="none" stroke="white" stroke-width="3"/>
+                        <!-- NEXT.JS テキスト -->
+                        <text x="100" y="110" text-anchor="middle" fill="white" font-size="32" font-family="Arial, sans-serif" font-weight="bold" letter-spacing="2">NEXT.JS</text>
+                    </svg>
+                </div>
+                <h3 class="course-name">Next.js</h3>
+                <p class="course-type">Fullstack Framework</p>
+                
+                <div class="course-details">
+                    <div class="lesson-count">10 Lessons</div>
+                    <p class="course-description">
+                        Reactフルスタックフレームワーク。SSR/SSG、API Routes、認証、
+                        SEO最適化、デプロイまで本格的なアプリ開発を学習します。
+                    </p>
+                    <div class="topics">
+                        <span class="topic-tag">SSR/SSG</span>
+                        <span class="topic-tag">API Routes</span>
+                        <span class="topic-tag">SEO</span>
+                        <span class="topic-tag">Vercel</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Java -->
+            <a href="http://localhost:8082" class="course-card java" target="_blank">
+                <i class="devicon-java-plain course-icon"></i>
+                <h3 class="course-name">Java</h3>
+                <p class="course-type">Enterprise Language</p>
+                
+                <div class="course-details">
+                    <div class="lesson-count">10 Lessons</div>
+                    <p class="course-description">
+                        エンタープライズ開発の基盤。OOP、Spring Boot、JPA/Hibernate、
+                        マイクロサービス、デザインパターンまで実務レベルを習得します。
+                    </p>
+                    <div class="topics">
+                        <span class="topic-tag">Spring Boot</span>
+                        <span class="topic-tag">JPA</span>
+                        <span class="topic-tag">Security</span>
+                        <span class="topic-tag">Microservices</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Rails -->
+            <a href="http://localhost:3003" class="course-card rails" target="_blank">
+                <i class="devicon-rails-plain course-icon"></i>
+                <h3 class="course-name">Rails</h3>
+                <p class="course-type">Backend Framework</p>
+                
+                <div class="course-details">
+                    <div class="lesson-count">10 Lessons</div>
+                    <p class="course-description">
+                        Rubyの生産性の高いフレームワーク。Active Record、API開発、
+                        WebSocket、バックグラウンドジョブまで幅広く学習します。
+                    </p>
+                    <div class="topics">
+                        <span class="topic-tag">ActiveRecord</span>
+                        <span class="topic-tag">Devise</span>
+                        <span class="topic-tag">Action Cable</span>
+                        <span class="topic-tag">RSpec</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Vue.js -->
+            <a href="http://localhost:3004" class="course-card vue" target="_blank">
+                <i class="devicon-vuejs-plain course-icon"></i>
+                <h3 class="course-name">Vue.js</h3>
+                <p class="course-type">Frontend Framework</p>
+                
+                <div class="course-details">
+                    <div class="lesson-count">10 Lessons</div>
+                    <p class="course-description">
+                        プログレッシブフレームワーク。Composition API、Pinia、
+                        Nuxt.js、パフォーマンス最適化まで実践的に学習します。
+                    </p>
+                    <div class="topics">
+                        <span class="topic-tag">Composition API</span>
+                        <span class="topic-tag">Pinia</span>
+                        <span class="topic-tag">Vue Router</span>
+                        <span class="topic-tag">Nuxt</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- JavaScript/TypeScript -->
+            <a href="#" class="course-card js">
+                <i class="devicon-javascript-plain course-icon"></i>
+                <h3 class="course-name">JavaScript/TypeScript</h3>
+                <p class="course-type">Programming Language</p>
+                
+                <div class="course-details">
+                    <div class="lesson-count">10 Lessons</div>
+                    <p class="course-description">
+                        モダンJavaScriptとTypeScript。ES6+、非同期処理、
+                        型システム、デザインパターンまでマスターします。
+                    </p>
+                    <div class="topics">
+                        <span class="topic-tag">ES6+</span>
+                        <span class="topic-tag">Async/Await</span>
+                        <span class="topic-tag">Generics</span>
+                        <span class="topic-tag">Patterns</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Docker -->
+            <a href="#" class="course-card docker">
+                <i class="devicon-docker-plain course-icon"></i>
+                <h3 class="course-name">Docker</h3>
+                <p class="course-type">Containerization</p>
+                
+                <div class="course-details">
+                    <div class="lesson-count">10 Lessons</div>
+                    <p class="course-description">
+                        コンテナ技術の基礎から応用まで。Dockerfile、Compose、
+                        Kubernetes、CI/CDまで実務運用を学習します。
+                    </p>
+                    <div class="topics">
+                        <span class="topic-tag">Dockerfile</span>
+                        <span class="topic-tag">Compose</span>
+                        <span class="topic-tag">K8s</span>
+                        <span class="topic-tag">CI/CD</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Git -->
+            <a href="#" class="course-card git">
+                <i class="devicon-git-plain course-icon"></i>
+                <h3 class="course-name">Git</h3>
+                <p class="course-type">Version Control</p>
+                
+                <div class="course-details">
+                    <div class="lesson-count">10 Lessons</div>
+                    <p class="course-description">
+                        バージョン管理の基礎から高度な使い方まで。ブランチ戦略、
+                        GitHub/GitLab、CI/CD統合まで実践的に学習します。
+                    </p>
+                    <div class="topics">
+                        <span class="topic-tag">Branching</span>
+                        <span class="topic-tag">Rebase</span>
+                        <span class="topic-tag">GitHub Actions</span>
+                        <span class="topic-tag">Hooks</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- SQL -->
+            <a href="#" class="course-card sql">
+                <i class="devicon-mysql-plain course-icon"></i>
+                <h3 class="course-name">SQL</h3>
+                <p class="course-type">Database</p>
+                
+                <div class="course-details">
+                    <div class="lesson-count">10 Lessons</div>
+                    <p class="course-description">
+                        データベースの基礎から応用まで。クエリ、インデックス、
+                        トランザクション、最適化まで実務レベルを習得します。
+                    </p>
+                    <div class="topics">
+                        <span class="topic-tag">Query</span>
+                        <span class="topic-tag">Index</span>
+                        <span class="topic-tag">Transaction</span>
+                        <span class="topic-tag">Optimization</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="features">
+            <div class="feature-item">
+                <div class="feature-icon">📖</div>
+                <h3 class="feature-title">体系的カリキュラム</h3>
+                <p class="feature-description">基礎から応用まで段階的に学べる100レッスン</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">💼</div>
+                <h3 class="feature-title">実務レベル</h3>
+                <p class="feature-description">業務で即使えるスキルと知識を習得</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">ハンズオン</h3>
+                <p class="feature-description">実際にコードを書きながら学ぶ実践形式</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">進捗管理</h3>
+                <p class="feature-description">学習状況を可視化して効率的に学習</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isMenuOpen = false;
+        
+        // DOMが読み込まれた後にLucideを初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+        
+        function toggleMenu() {
+            const hamburgerBtn = document.querySelector('.hamburger-btn');
+            const navMenu = document.querySelector('.nav-menu');
+            const overlay = document.querySelector('.overlay');
+            
+            isMenuOpen = !isMenuOpen;
+            
+            // 既存のアイコンをクリアして新しいアイコンを設定
+            if (isMenuOpen) {
+                hamburgerBtn.innerHTML = '<i data-lucide="x"></i>';
+            } else {
+                hamburgerBtn.innerHTML = '<i data-lucide="menu"></i>';
+            }
+            
+            // アイコンを再レンダリング
+            lucide.createIcons();
+            
+            hamburgerBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+        
+        // ESCキーでメニューを閉じる
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isMenuOpen) {
+                toggleMenu();
+            }
+        });
+    </script>
+</body>
+</html>
