@@ -1,0 +1,82 @@
+:root {
+  --auth-bg-1: #0a0c14;
+  --auth-bg-2: #162036;
+  --auth-bg-3: #40235d;
+  --auth-surface: rgba(11, 12, 20, 0.82);
+  --auth-surface-border: rgba(255, 255, 255, 0.08);
+  --auth-text: rgba(245, 247, 255, 0.96);
+  --auth-text-dim: rgba(210, 218, 255, 0.68);
+  --auth-primary: linear-gradient(135deg, rgba(74, 124, 255, 0.95), rgba(203, 96, 255, 0.95));
+  --auth-primary-shadow: rgba(94, 140, 255, 0.32);
+  --auth-focus: rgba(90, 160, 255, 0.6);
+  --auth-warning: rgba(255, 114, 141, 0.95);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --auth-bg-1: #f2f6ff;
+    --auth-bg-2: #ccd8ff;
+    --auth-bg-3: #f7c6ff;
+    --auth-surface: rgba(255, 255, 255, 0.78);
+    --auth-surface-border: rgba(20, 30, 60, 0.12);
+    --auth-text: rgba(18, 24, 40, 0.92);
+    --auth-text-dim: rgba(32, 42, 70, 0.65);
+  }
+}
+
+.auth-portal-body {
+  margin: 0;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  color: var(--auth-text);
+  font-family: "Inter", "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: linear-gradient(135deg, var(--auth-bg-1), var(--auth-bg-2), var(--auth-bg-3));
+  background-size: 300% 300%;
+  animation: auth-gradient-shift 26s ease-in-out infinite;
+}
+
+.auth-portal-body::before,
+.auth-portal-body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.auth-portal-body::before {
+  background: radial-gradient(circle at 20% -10%, rgba(255, 78, 120, 0.28), transparent 40%),
+    radial-gradient(circle at 88% 120%, rgba(68, 148, 255, 0.22), transparent 52%);
+  mix-blend-mode: screen;
+}
+
+.auth-portal-body::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E");
+  opacity: 0.3;
+  mix-blend-mode: soft-light;
+}
+
+@keyframes auth-gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-portal-body {
+    animation: none;
+  }
+}
+
+.auth-portal__mode-switch label:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.55);
+  outline-offset: 2px;
+}

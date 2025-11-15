@@ -1,0 +1,227 @@
+.lesson-tabs {
+  margin-bottom: var(--gap-md);
+}
+
+.lesson-tabs__controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.lesson-tabs__button {
+  flex: 1 1 160px;
+  padding: 0.9rem 1.2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-alt);
+  background: var(--color-surface-alt);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.lesson-tabs__button--active {
+  background: linear-gradient(135deg, #333333 0%, #555555 100%);
+  border-color: #444444;
+  color: var(--color-text-primary);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.lesson-tabs__content {
+  display: none;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--gap-md);
+}
+
+.lesson-tabs__content--active {
+  display: block;
+}
+
+.lesson-checklist {
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.lesson-checklist__item {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+.lesson-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: linear-gradient(135deg, #333333 0%, #555555 100%);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: var(--transition-base);
+}
+
+.lesson-button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #444444 0%, #666666 100%);
+}
+
+.lesson-button--ghost {
+  background: var(--color-surface-alt);
+  border-color: var(--color-border-alt);
+  color: var(--color-text-secondary);
+}
+
+.lesson-button--primary {
+  background: linear-gradient(135deg, #ff2d20 0%, #ff6b6b 100%);
+  border-color: #ff6b6b;
+}
+
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: var(--gap-md);
+}
+
+.lesson-nav__actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.lesson-exercise {
+  background: var(--color-surface-alt);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.lesson-exercise__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.8rem;
+}
+
+.lesson-exercise__number {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff2d20 0%, #ff6b6b 100%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.lesson-exercise__title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.lesson-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  margin-bottom: 1.2rem;
+}
+
+.lesson-table th,
+.lesson-table td {
+  padding: 0.75rem 0.8rem;
+  text-align: left;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+}
+
+.lesson-glossary {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.lesson-glossary__item {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.4rem;
+}
+
+.lesson-glossary__item-title {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+}
+
+.lesson-list {
+  margin: 1rem 0 1rem 1.5rem;
+  color: var(--color-text-secondary);
+}
+
+.lesson-link {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.lesson-link:hover {
+  text-decoration: underline;
+}
+
+.lesson-code + .lesson-text--muted {
+  margin-top: 0.5rem;
+}
+
+pre {
+  background: var(--color-surface-alt) !important;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.2rem !important;
+  overflow-x: auto;
+}
+
+code {
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 0.9rem;
+}
+
+:not(pre) > code {
+  background: var(--color-surface-alt);
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-accent-strong);
+}
+
+@media (max-width: 720px) {
+  .lesson__hero {
+    padding: 2rem;
+  }
+
+  .lesson__container {
+    padding: 2rem;
+  }
+
+  .lesson-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lesson-nav__actions {
+    width: 100%;
+  }
+}

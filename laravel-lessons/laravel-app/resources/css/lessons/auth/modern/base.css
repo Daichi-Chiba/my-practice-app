@@ -1,0 +1,123 @@
+:root {
+  --auth-modern-bg-start: #0f1116;
+  --auth-modern-bg-end: #1e222d;
+  --auth-modern-bg-highlight: rgba(255, 255, 255, 0.06);
+  --auth-modern-accent: #f3f4f6;
+  --auth-modern-accent-light: #d6d7dc;
+  --auth-modern-text: rgba(244, 245, 248, 0.92);
+  --auth-modern-text-muted: rgba(207, 210, 220, 0.7);
+  --auth-modern-surface: rgba(19, 22, 30, 0.92);
+  --auth-modern-border: rgba(255, 255, 255, 0.08);
+}
+
+.auth-modern-body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Inter", "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.06), transparent 40%),
+    radial-gradient(circle at 15% 85%, rgba(72, 80, 95, 0.18), transparent 48%),
+    linear-gradient(135deg, var(--auth-modern-bg-start), var(--auth-modern-bg-end));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--auth-modern-text);
+}
+
+.auth-modern {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.4rem, 4vw, 2.2rem);
+  padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 6vw, 3.5rem);
+}
+
+.auth-modern__toggle-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.auth-modern__header {
+  width: min(960px, 96vw);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 20;
+}
+
+.auth-modern__brand,
+.auth-modern__backlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.auth-modern__brand {
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(16, 18, 24, 0.62);
+  color: var(--auth-modern-text);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.36);
+}
+
+.auth-modern__brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--auth-modern-text);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.auth-modern__brand-eyebrow {
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: rgba(43, 47, 66, 0.68);
+}
+
+.auth-modern__brand-title {
+  font-size: 0.95rem;
+}
+
+.auth-modern__backlink {
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  color: var(--auth-modern-text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(20, 24, 32, 0.68);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32);
+}
+
+.auth-modern__backlink svg {
+  width: 18px;
+  height: 18px;
+}
+
+.auth-modern__brand:hover,
+.auth-modern__brand:focus-visible,
+.auth-modern__backlink:hover,
+.auth-modern__backlink:focus-visible {
+  color: var(--auth-modern-text);
+  transform: translateY(-2px);
+}

@@ -11,7 +11,8 @@ class Lesson extends Model
         'lesson_number',
         'title',
         'description',
-        'content'
+        'route_name',
+        'exercise_route_name',
     ];
 
     public function course()

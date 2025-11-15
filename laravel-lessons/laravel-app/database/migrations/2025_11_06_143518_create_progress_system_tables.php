@@ -11,29 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // ユーザーテーブル
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('username', 50)->unique();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-            
-            $table->index('email');
-            $table->index('username');
-        });
-
         // コーステーブル
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
             $table->string('slug', 100)->unique();
             $table->text('description')->nullable();
-            $table->integer('total_lessons')->default(10);
+            $table->tinyInteger('difficulty_level')->default(1);
+            $table->integer('total_lessons')->default(0);
             $table->string('icon')->nullable();
             $table->string('color')->nullable();
-            $table->integer('port')->nullable();
             $table->timestamps();
             
             $table->index('slug');
@@ -46,7 +33,8 @@ return new class extends Migration
             $table->integer('lesson_number');
             $table->string('title', 200);
             $table->text('description')->nullable();
-            $table->text('content')->nullable();
+            $table->string('route_name')->nullable();
+            $table->string('exercise_route_name')->nullable();
             $table->timestamps();
             
             $table->unique(['course_id', 'lesson_number']);
@@ -75,6 +63,5 @@ return new class extends Migration
         Schema::dropIfExists('user_progress');
         Schema::dropIfExists('lessons');
         Schema::dropIfExists('courses');
-        Schema::dropIfExists('users');
     }
 };

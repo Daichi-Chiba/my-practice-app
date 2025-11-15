@@ -19,6 +19,17 @@
         </div>
     </main>
 
+    <footer class="lesson-footer">
+        <a class="lesson-footer__link lesson-footer__link--ghost" href="{{ route('global-top') }}">
+            <i data-lucide="globe"></i>
+            全体 TOP へ
+        </a>
+        <a class="lesson-footer__link" href="{{ route('home') }}">
+            <i data-lucide="book-open"></i>
+            レッスン一覧に戻る
+        </a>
+    </footer>
+
     @stack('scripts')
 </body>
 </html>

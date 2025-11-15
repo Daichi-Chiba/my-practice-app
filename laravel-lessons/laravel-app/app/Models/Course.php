@@ -10,15 +10,20 @@ class Course extends Model
         'name',
         'slug',
         'description',
+        'difficulty_level',
         'total_lessons',
         'icon',
         'color',
-        'port'
     ];
 
     public function lessons()
     {
         return $this->hasMany(Lesson::class);
+    }
+
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('difficulty_level')->orderBy('id');
     }
 
     public function userProgress($userId = null)
