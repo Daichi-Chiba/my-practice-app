@@ -5,6 +5,19 @@
   padding: var(--gap-md);
 }
 
+@mixin preset-card-glass {
+  background: var(--preset-card-glass-bg);
+  border: 1px solid var(--preset-card-glass-border);
+  box-shadow: var(--preset-card-glass-shadow);
+  border-radius: var(--radius-xl);
+}
+
+@mixin preset-card-overlay {
+  background: var(--preset-card-overlay-bg);
+  border: 1px solid var(--preset-card-overlay-border);
+  border-radius: var(--radius-lg);
+}
+
 @mixin flex-row($gap: 1rem, $align: center, $justify: flex-start) {
   display: flex;
   align-items: $align;
@@ -14,4 +27,89 @@
 
 @mixin text-muted {
   color: var(--color-text-muted);
+}
+
+@mixin preset-pill-dark {
+  background: var(--preset-pill-dark-bg);
+  border: 1px solid var(--preset-pill-dark-border);
+  color: var(--preset-pill-dark-text);
+  border-radius: var(--radius-pill);
+}
+
+@mixin preset-button-primary {
+  background: var(--preset-button-primary-bg);
+  box-shadow: var(--preset-button-primary-shadow);
+  color: var(--preset-button-primary-text);
+}
+
+@mixin preset-button-dark {
+  background: var(--preset-button-dark-bg);
+  border: 1px solid var(--preset-button-dark-border);
+  color: var(--preset-button-dark-text);
+}
+
+@mixin preset-input-base {
+  background: var(--preset-input-bg);
+  border: 1px solid var(--preset-input-border);
+  color: var(--color-text-primary);
+  &::placeholder {
+    color: var(--preset-input-placeholder);
+  }
+}
+
+@mixin preset-input-focus {
+  &:focus {
+    outline: none;
+    box-shadow: var(--preset-focus-shadow-primary);
+  }
+
+  &:invalid:focus {
+    box-shadow: var(--preset-focus-shadow-error);
+  }
+}
+
+@mixin preset-nav-link {
+  background: var(--preset-nav-link-bg);
+  border: 1px solid var(--preset-nav-link-border);
+  color: var(--preset-nav-link-text);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--preset-nav-link-hover-bg);
+    border-color: var(--preset-nav-link-hover-border);
+    color: var(--preset-nav-link-hover-text);
+    box-shadow: var(--preset-nav-link-hover-shadow);
+  }
+}
+
+@mixin preset-nav-pill {
+  background: var(--preset-nav-pill-bg);
+  border: 1px solid var(--preset-nav-pill-border);
+  color: var(--preset-nav-pill-text);
+
+  &:hover,
+  &:focus-visible,
+  &[aria-selected='true'] {
+    background: var(--preset-nav-pill-hover-bg);
+    border-color: var(--preset-nav-pill-hover-border);
+    box-shadow: var(--preset-nav-pill-hover-shadow);
+    color: var(--color-text-primary);
+  }
+}
+
+@mixin preset-ghost-badge {
+  background: var(--preset-ghost-badge-bg);
+  border: 1px solid var(--preset-ghost-badge-border);
+  color: var(--preset-ghost-badge-text);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--preset-ghost-badge-hover-border);
+    color: var(--color-text-primary);
+  }
+}
+
+@mixin preset-badge-icon {
+  background: var(--preset-badge-icon-bg);
+  color: var(--preset-badge-icon-text);
 }

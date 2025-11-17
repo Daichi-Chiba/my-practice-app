@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LessonPageController;
 use App\Http\Controllers\ProfileController;
+use App\Support\CurriculumCatalog;
 use Illuminate\Support\Facades\Route;
 
 // -------------------------------------------------
@@ -18,61 +20,99 @@ Route::get('/dashboard', function () {
 // -------------------------------------------------
 // レッスンページ（初級）
 // -------------------------------------------------
-Route::prefix('beginner')->group(function () {
-    Route::view('/lesson00', 'lessons.lesson00')->name('lesson00');
-    Route::view('/lesson01', 'lessons.lesson01')->name('lesson01');
-    Route::view('/lesson02', 'lessons.lesson02')->name('lesson02');
-    Route::view('/lesson03', 'lessons.lesson03')->name('lesson03');
-    Route::view('/lesson04', 'lessons.lesson04')->name('lesson04');
-    Route::view('/lesson05', 'lessons.lesson05')->name('lesson05');
-    Route::view('/lesson06', 'lessons.lesson06')->name('lesson06');
-    Route::view('/lesson07', 'lessons.lesson07')->name('lesson07');
-    Route::view('/lesson08', 'lessons.lesson08')->name('lesson08');
-    Route::view('/lesson09', 'lessons.lesson09')->name('lesson09');
-    Route::view('/lesson10', 'lessons.lesson10')->name('lesson10');
+/**
+ * 初級レッスン／演習ルートを CurriculumCatalog から自動生成
+ * - lessonXX / exercises.lessonXX など既存のルート名を維持
+ * - /lessonXX など旧 URL からのアクセスは 301 で新ルートへリダイレクト
+ */
+$curriculumTiers = CurriculumCatalog::all()->keyBy('slug');
+
+$lessonZeroRoute = Route::get('/beginner/lesson00', [LessonPageController::class, 'showLesson'])
+    ->defaults('number', '00')
+    ->defaults('tier', 'beginner')
+    ->name('lesson00');
+
+Route::get('/beginner/exercises/lesson00', [LessonPageController::class, 'showExercise'])
+    ->defaults('number', '00')
+    ->defaults('tier', 'beginner')
+    ->name('exercises.lesson00');
+
+Route::get('/lesson00', function () {
+    return redirect()->route('lesson00', ['number' => '00'], 301);
 });
 
-// -------------------------------------------------
-// 演習ページ（初級）
-// -------------------------------------------------
-Route::prefix('beginner/exercises')->name('exercises.')->group(function () {
-    Route::view('/lesson00', 'exercises.lesson00')->name('lesson00');
-    Route::view('/lesson01', 'exercises.lesson01')->name('lesson01');
-    Route::view('/lesson02', 'exercises.lesson02')->name('lesson02');
-    Route::view('/lesson03', 'exercises.lesson03')->name('lesson03');
-    Route::view('/lesson04', 'exercises.lesson04')->name('lesson04');
-    Route::view('/lesson05', 'exercises.lesson05')->name('lesson05');
-    Route::view('/lesson06', 'exercises.lesson06')->name('lesson06');
-    Route::view('/lesson07', 'exercises.lesson07')->name('lesson07');
-    Route::view('/lesson08', 'exercises.lesson08')->name('lesson08');
-    Route::view('/lesson09', 'exercises.lesson09')->name('lesson09');
-    Route::view('/lesson10', 'exercises.lesson10')->name('lesson10');
+Route::get('/exercises/lesson00', function () {
+    return redirect()->route('exercises.lesson00', ['number' => '00'], 301);
 });
 
-// 既存 URL 互換リダイレクト
-Route::redirect('/lesson00', '/beginner/lesson00', 301);
-Route::redirect('/lesson01', '/beginner/lesson01', 301);
-Route::redirect('/lesson02', '/beginner/lesson02', 301);
-Route::redirect('/lesson03', '/beginner/lesson03', 301);
-Route::redirect('/lesson04', '/beginner/lesson04', 301);
-Route::redirect('/lesson05', '/beginner/lesson05', 301);
-Route::redirect('/lesson06', '/beginner/lesson06', 301);
-Route::redirect('/lesson07', '/beginner/lesson07', 301);
-Route::redirect('/lesson08', '/beginner/lesson08', 301);
-Route::redirect('/lesson09', '/beginner/lesson09', 301);
-Route::redirect('/lesson10', '/beginner/lesson10', 301);
+$beginnerLessons = optional($curriculumTiers->get('beginner'))['lessons'] ?? [];
 
-Route::redirect('/exercises/lesson00', '/beginner/exercises/lesson00', 301);
-Route::redirect('/exercises/lesson01', '/beginner/exercises/lesson01', 301);
-Route::redirect('/exercises/lesson02', '/beginner/exercises/lesson02', 301);
-Route::redirect('/exercises/lesson03', '/beginner/exercises/lesson03', 301);
-Route::redirect('/exercises/lesson04', '/beginner/exercises/lesson04', 301);
-Route::redirect('/exercises/lesson05', '/beginner/exercises/lesson05', 301);
-Route::redirect('/exercises/lesson06', '/beginner/exercises/lesson06', 301);
-Route::redirect('/exercises/lesson07', '/beginner/exercises/lesson07', 301);
-Route::redirect('/exercises/lesson08', '/beginner/exercises/lesson08', 301);
-Route::redirect('/exercises/lesson09', '/beginner/exercises/lesson09', 301);
-Route::redirect('/exercises/lesson10', '/beginner/exercises/lesson10', 301);
+foreach ($beginnerLessons as $lesson) {
+    $number = str_pad((string) ($lesson['number'] ?? ''), 2, '0', STR_PAD_LEFT);
+
+    if ($number === '') {
+        continue;
+    }
+
+    $lessonRouteName = $lesson['route'] ?? ('lesson' . $number);
+    $exerciseRouteName = $lesson['exercise_route'] ?? ('exercises.lesson' . $number);
+
+    // レッスンページ本体
+    Route::get('/beginner/lesson' . $number, [LessonPageController::class, 'showLesson'])
+        ->defaults('number', $number)
+        ->defaults('tier', 'beginner')
+        ->name($lessonRouteName);
+
+    // 演習ページ本体
+    Route::get('/beginner/exercises/lesson' . $number, [LessonPageController::class, 'showExercise'])
+        ->defaults('number', $number)
+        ->defaults('tier', 'beginner')
+        ->name($exerciseRouteName);
+
+    // 旧 URL (/lessonXX) からのリダイレクト
+    Route::get('/lesson' . $number, function () use ($lessonRouteName, $number) {
+        return redirect()->route($lessonRouteName, ['number' => $number], 301);
+    });
+
+    // 旧 URL (/exercises/lessonXX) からのリダイレクト
+    Route::get('/exercises/lesson' . $number, function () use ($exerciseRouteName, $number) {
+        return redirect()->route($exerciseRouteName, ['number' => $number], 301);
+    });
+}
+
+// -------------------------------------------------
+// レッスンページ（中級・上級など）
+// -------------------------------------------------
+foreach ($curriculumTiers as $tier) {
+    $tierSlug = $tier['slug'] ?? null;
+
+    if (blank($tierSlug) || $tierSlug === 'beginner') {
+        continue;
+    }
+
+    $lessons = $tier['lessons'] ?? [];
+
+    foreach ($lessons as $lesson) {
+        $number = str_pad((string) ($lesson['number'] ?? ''), 2, '0', STR_PAD_LEFT);
+
+        if ($number === '') {
+            continue;
+        }
+
+        $lessonRouteName = $lesson['route'] ?? ($tierSlug . '.lesson' . $number);
+        $exerciseRouteName = $lesson['exercise_route'] ?? ($tierSlug . '.exercises.lesson' . $number);
+
+        Route::get('/' . $tierSlug . '/lesson' . $number, [LessonPageController::class, 'showLesson'])
+            ->defaults('number', $number)
+            ->defaults('tier', $tierSlug)
+            ->name($lessonRouteName);
+
+        Route::get('/' . $tierSlug . '/exercises/lesson' . $number, [LessonPageController::class, 'showExercise'])
+            ->defaults('number', $number)
+            ->defaults('tier', $tierSlug)
+            ->name($exerciseRouteName);
+    }
+}
 
 // -------------------------------------------------
 // 認証後ページ

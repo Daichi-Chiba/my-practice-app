@@ -46,18 +46,28 @@ class CurriculumCatalog
                             $exerciseRoute = static::guessExerciseRouteName($slug, $number);
                         }
 
+                        $hero = LessonHeroExtractor::extract($number, $slug);
+
+                        $title = $lesson['title'] ?? ($hero['title'] ?? ('Lesson ' . $number));
+                        $summary = $lesson['summary'] ?? $lesson['description'] ?? ($hero['subtitle'] ?? null);
+                        $description = $lesson['description'] ?? $lesson['summary'] ?? ($hero['subtitle'] ?? null);
+
                         return [
                             'number' => $number,
                             'code' => $lesson['code'] ?? ('Lesson ' . $number),
-                            'title' => $lesson['title'] ?? ('Lesson ' . $number),
-                            'summary' => $lesson['summary'] ?? null,
-                            'description' => $lesson['description'] ?? $lesson['summary'] ?? null,
+                            'title' => $title,
+                            'summary' => $summary,
+                            'description' => $description,
                             'topics' => $lesson['topics'] ?? [],
                             'type' => $lesson['type'] ?? null,
                             'anchor' => $anchor,
                             'exercise_anchor' => str_replace('lesson', 'exercise', $anchor),
                             'route' => $route,
                             'exercise_route' => $exerciseRoute,
+                            'hero_title' => $hero['title'] ?? null,
+                            'hero_subtitle' => $hero['subtitle'] ?? null,
+                            'hero_meta' => $hero['meta'] ?? [],
+                            'hero_tags' => $hero['tags'] ?? [],
                         ];
                     })
                     ->values();
@@ -138,7 +148,7 @@ class CurriculumCatalog
             $course = $courseMap->get($tierSlug);
             $courseLessonByNumber = $courseLessonsByNumber->get($tierSlug, collect());
 
-            $lessons = collect($tier['lessons'] ?? [])->map(function (array $lesson) use ($tierId, $homeUrl, $courseLessonByNumber, $courseLessonsByRoute) {
+            $lessons = collect($tier['lessons'] ?? [])->map(function (array $lesson) use ($tierId, $tierSlug, $homeUrl, $courseLessonByNumber, $courseLessonsByRoute) {
                 $routeName = $lesson['route'] ?? null;
                 $exerciseRouteName = $lesson['exercise_route'] ?? null;
 
@@ -155,7 +165,7 @@ class CurriculumCatalog
                 $anchor = $lesson['anchor'];
                 $exerciseAnchor = $lesson['exercise_anchor'] ?? str_replace('lesson', 'exercise', $anchor);
 
-                $hero = LessonHeroExtractor::extract($lesson['number'] ?? null);
+                $hero = LessonHeroExtractor::extract($lesson['number'] ?? null, $tierSlug);
 
                 return array_merge($lesson, [
                     'route_exists' => $lessonStats['route_exists'] ?? $routeExists,

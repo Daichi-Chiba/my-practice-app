@@ -109,7 +109,7 @@ const initPlatformNav = () => {
     const toggle = root.querySelector<HTMLButtonElement>(
         "[data-platform-nav-toggle]"
     );
-                                                                                                const overlay = root.querySelector<HTMLElement>(
+    const overlay = root.querySelector<HTMLElement>(
         "[data-platform-nav-overlay]"
     );
     const drawer = root.querySelector<HTMLElement>(
@@ -361,16 +361,11 @@ const initCatalogTabs = () => {
   });
 };
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initSiteNavigation);
-  document.addEventListener("DOMContentLoaded", initPlatformNav);
-  document.addEventListener("DOMContentLoaded", initAuthPortal);
-  document.addEventListener("DOMContentLoaded", initCatalogTabs);
-} else {
-  initSiteNavigation();
-  initPlatformNav();
-  initAuthPortal();
-  initCatalogTabs();
-}
+export const initSiteFeatures = () => {
+    initSiteNavigation();
+    initPlatformNav();
+    initAuthPortal();
+    initCatalogTabs();
+};
 
-export default initSiteNavigation;
+export { initSiteNavigation, initPlatformNav, initAuthPortal, initCatalogTabs };

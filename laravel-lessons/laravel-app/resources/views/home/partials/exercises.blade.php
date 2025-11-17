@@ -1,4 +1,34 @@
-@include('home.partials._curriculum-data')
+@php
+  $curriculumHome = $curriculumHome ?? route('home');
+
+  $exerciseTiers = collect($exerciseTiers ?? null);
+
+  if ($exerciseTiers->isEmpty()) {
+    $curriculumTiersForExercises = collect($curriculumTiers ?? \App\Support\CurriculumCatalog::all())
+      ->map(function ($tier) {
+        return $tier instanceof \Illuminate\Support\Collection ? $tier->toArray() : (array) $tier;
+      });
+
+    $exerciseTiers = $curriculumTiersForExercises->map(function (array $tier) {
+      return [
+        'id' => $tier['id'],
+        'label' => $tier['label'],
+        'description' => $tier['description'] ?? $tier['overview'] ?? null,
+        'exercises' => collect($tier['lessons'] ?? [])->map(function (array $lesson) {
+          return [
+            'code' => $lesson['code'],
+            'title' => ($lesson['title'] ?? '') . ' 演習',
+            'anchor' => $lesson['exercise_anchor'],
+            'route' => $lesson['exercise_route'] ?? null,
+            'number' => $lesson['number'],
+          ];
+        })->all(),
+      ];
+    });
+  }
+
+  $exerciseTiers = $exerciseTiers->values()->all();
+@endphp
 
 <section class="catalog-exercises" aria-labelledby="catalog-exercises-title">
   <div class="catalog-section-header">

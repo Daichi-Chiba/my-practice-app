@@ -56,7 +56,7 @@
             $lessonUrl = $lesson['route_exists'] ? route($lesson['route']) : $lesson['home_anchor'];
             $exerciseUrl = $lesson['exercise_exists'] ? route($lesson['exercise_route']) : $lesson['exercise_anchor'];
           @endphp
-          <article class="global-roadmap__card">
+          <article class="global-roadmap__card" data-roadmap-card>
             @php
               $overlayTitle = $lesson['hero_title'] ?? $lesson['title'];
               $overlaySubtitle = $lesson['hero_subtitle'] ?? $lesson['description'];
@@ -102,11 +102,22 @@
                   <i data-lucide="clipboard-list"></i>
                   <span>演習へ</span>
                 </a>
+                @if ($hasOverlay)
+                  <button
+                    type="button"
+                    class="global-roadmap__link global-roadmap__link--secondary"
+                    data-roadmap-toggle
+                    aria-expanded="false"
+                  >
+                    <i data-lucide="chevron-down"></i>
+                    <span>詳しく表示</span>
+                  </button>
+                @endif
               </div>
             </div>
 
             @if ($hasOverlay)
-              <div class="global-roadmap__card-overlay" aria-hidden="true">
+              <div class="global-roadmap__card-overlay" aria-hidden="true" data-roadmap-details>
                 <div class="global-roadmap__overlay-header">
                   <span class="global-roadmap__overlay-code">{{ $lesson['code'] }}</span>
                   <h4 class="global-roadmap__overlay-title">{{ $overlayTitle }}</h4>

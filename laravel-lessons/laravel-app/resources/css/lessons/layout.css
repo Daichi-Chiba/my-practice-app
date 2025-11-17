@@ -17,9 +17,9 @@
   background: var(--gradient-accent-hero);
   border: 1px solid var(--color-accent-border-soft);
   border-radius: var(--radius-lg);
-  padding: 3rem;
+  padding: var(--padding-hero);
   margin-bottom: var(--gap-md);
-  box-shadow: 0 35px 80px rgba(75, 8, 4, 0.55), inset 0 0 50px var(--color-accent-soft);
+  box-shadow: var(--shadow-hero), var(--shadow-hero-inset);
 }
 
 .lesson__breadcrumb {
@@ -55,13 +55,13 @@
   font-size: 0.9rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: rgba(28, 3, 2, 0.9);
+  color: var(--color-lesson-number-text);
 }
 
 .lesson__title {
   font-size: 2.3rem;
   margin: 0 0 1rem;
-  background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+  background: var(--gradient-title-text);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -76,7 +76,7 @@
 .lesson__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: var(--gap-meta-row);
   margin-bottom: 1rem;
 }
 
@@ -91,7 +91,7 @@
 .lesson-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: var(--gap-tag);
   list-style: none;
   padding: 0;
   margin: 1rem 0 0;
@@ -99,7 +99,7 @@
 
 .lesson-tags__item {
   border: 1px solid var(--color-border-alt);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   padding: 0.3rem 0.8rem;
   font-size: 0.85rem;
   color: var(--color-text-secondary);
@@ -109,7 +109,7 @@
 .lesson-tags__item--primary {
   border-color: var(--color-accent);
   color: var(--color-accent);
-  background: rgba(97, 218, 251, 0.1);
+  background: var(--color-tag-primary-bg);
 }
 
 .lesson-section {
@@ -152,28 +152,28 @@
 .lesson-callout {
   border-left: 4px solid var(--color-accent);
   border-radius: var(--radius-sm);
-  padding: 1rem;
+  padding: var(--padding-details);
   margin: 1rem 0;
-  background: linear-gradient(135deg, rgba(97, 218, 251, 0.08), rgba(32, 116, 132, 0.08));
+  background: var(--gradient-callout-info);
   color: var(--color-text-secondary);
 }
 
 .lesson-callout--warning {
   border-left-color: var(--color-danger);
-  background: linear-gradient(135deg, rgba(255, 45, 32, 0.08), rgba(139, 20, 14, 0.08));
-  color: #ffcbc2;
+  background: var(--gradient-callout-warning);
+  color: var(--color-callout-warning-text);
 }
 
 .lesson-callout--success {
   border-left-color: var(--color-success);
-  background: linear-gradient(135deg, rgba(66, 184, 131, 0.08), rgba(35, 95, 68, 0.08));
-  color: #c5f6d6;
+  background: var(--gradient-callout-success);
+  color: var(--color-callout-success-text);
 }
 
 .lesson-comparison {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.4rem;
+  gap: var(--gap-comparison);
   margin: 1.5rem 0;
 }
 
@@ -206,7 +206,7 @@
 
 .lesson-details {
   margin-top: 1rem;
-  padding: 1rem;
+  padding: var(--padding-details);
   background: var(--color-surface-alt);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -227,30 +227,30 @@
 }
 
 .lesson--validation .lesson__hero {
-  background: linear-gradient(135deg, rgba(255, 63, 49, 0.35) 0%, rgba(115, 9, 4, 0.95) 100%);
-  border-color: rgba(255, 59, 48, 0.6);
-  box-shadow: 0 40px 80px rgba(80, 8, 4, 0.55), inset 0 0 60px rgba(255, 59, 48, 0.22);
+  background: var(--gradient-hero-validation);
+  border-color: var(--color-hero-validation-border);
+  box-shadow: var(--shadow-hero-validation), var(--shadow-hero-validation-inset);
 }
 
 .lesson--validation .lesson-tags__item--primary,
 .lesson--validation .lesson__number,
 .lesson--validation .lesson-callout--warning {
-  background: linear-gradient(135deg, #ff2d20 0%, #ff6b6b 100%);
-  border-color: rgba(255, 107, 107, 0.9);
-  color: rgba(28, 3, 2, 0.92);
+  background: var(--gradient-button-primary);
+  border-color: var(--color-accent-border-strong);
+  color: var(--color-lesson-number-text);
 }
 
 .lesson--validation .lesson-callout--warning {
-  color: #ffded6;
-  background: linear-gradient(135deg, rgba(255, 45, 32, 0.18), rgba(139, 20, 14, 0.18));
+  color: var(--color-callout-warning-strong-text);
+  background: var(--gradient-callout-warning-strong);
 }
 
 .lesson-footer {
   margin-top: var(--gap-lg);
-  padding: var(--gap-md) var(--gap-lg);
+  padding: var(--padding-footer);
   display: flex;
   justify-content: center;
-  gap: 0.75rem;
+  gap: var(--gap-footer);
   flex-wrap: wrap;
 }
 
@@ -260,8 +260,8 @@
   gap: 0.5rem;
   padding: 0.75rem 1.4rem;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(15, 15, 15, 0.85);
+  border: 1px solid var(--color-footer-link-border);
+  background: var(--color-footer-link-bg);
   color: var(--color-text-primary);
   text-decoration: none;
   transition: var(--transition-base);
@@ -269,18 +269,18 @@
 
 .lesson-footer__link:hover,
 .lesson-footer__link:focus-visible {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--color-footer-link-border-hover);
   transform: translateY(-2px);
 }
 
 .lesson-footer__link--ghost {
   background: transparent;
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: var(--color-footer-link-ghost-border);
   color: var(--color-text-secondary);
 }
 
 .lesson-footer__link--ghost:hover,
 .lesson-footer__link--ghost:focus-visible {
-  border-color: rgba(255, 255, 255, 0.32);
+  border-color: var(--color-footer-link-ghost-border-hover);
   color: var(--color-text-primary);
 }

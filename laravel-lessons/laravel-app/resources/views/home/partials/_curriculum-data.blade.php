@@ -1,7 +1,9 @@
 @php
   $curriculumHome = $curriculumHome ?? route('home');
 
-  $curriculumTiers = collect($curriculumTiers ?? \App\Support\CurriculumCatalog::all())
+  $curriculumTiersSource = isset($curriculumTiers) ? $curriculumTiers : \App\Support\CurriculumCatalog::all();
+
+  $curriculumTiers = collect($curriculumTiersSource)
     ->map(function (array $tier) use ($curriculumHome) {
       $tierId = $tier['id'] ?? $tier['slug'] ?? 'tier';
       $tierSlug = $tier['slug'] ?? $tierId;
@@ -40,7 +42,9 @@
 
   $lessonTiers = $lessonTiers ?? $curriculumTiers;
 
-  $exerciseTiers = $exerciseTiers ?? collect($curriculumTiers)->map(function (array $tier) {
+  $exerciseTiersSource = isset($exerciseTiers) ? $exerciseTiers : null;
+
+  $exerciseTiers = $exerciseTiersSource ?? collect($curriculumTiers)->map(function (array $tier) {
     return [
       'id' => $tier['id'],
       'label' => $tier['label'],

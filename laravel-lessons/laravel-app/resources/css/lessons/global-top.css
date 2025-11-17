@@ -16,7 +16,7 @@
   border: 1px solid var(--color-accent-border-soft);
   border-radius: var(--radius-xl);
   padding: clamp(2rem, 4vw, 3.6rem);
-  box-shadow: 0 40px 80px rgba(75, 8, 4, 0.45), inset 0 0 60px var(--color-accent-soft);
+  box-shadow: var(--shadow-platform-hero), inset 0 0 60px var(--color-accent-soft);
 }
 
 .global-top__intro {
@@ -37,7 +37,7 @@
   font-size: clamp(2.6rem, 4.5vw, 3.6rem);
   line-height: 1.1;
   margin: 0;
-  background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+  background: var(--gradient-title-bold);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -61,8 +61,8 @@
   gap: 0.5rem;
   padding: 0.45rem 1rem;
   border-radius: 999px;
-  background: rgba(15, 15, 15, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--background-tag-dark);
+  border: 1px solid var(--border-tag-dark);
   font-size: 0.85rem;
   color: var(--color-text-muted);
 }
@@ -83,8 +83,8 @@
   gap: 1.25rem;
   padding: clamp(1.6rem, 3vw, 2.2rem);
   border-radius: var(--radius-xl);
-  background: rgba(10, 10, 10, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--background-card-strong);
+  border: 1px solid var(--border-card-strong);
 }
 
 .global-top__summary-title {
@@ -136,7 +136,7 @@
   position: relative;
   height: 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--background-progress-track);
   overflow: hidden;
 }
 
@@ -157,9 +157,9 @@
 }
 
 .global-top__stats {
-  background: rgba(10, 10, 10, 0.9);
+  background: var(--background-card-strong-90);
   border-radius: var(--radius-xl);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-card-strong);
   padding: clamp(1.6rem, 3vw, 2.1rem);
 }
 
@@ -175,8 +175,8 @@
   text-align: center;
   padding: 1.2rem 1rem;
   border-radius: var(--radius-lg);
-  background: rgba(18, 18, 18, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--background-glass-secondary-strong);
+  border: 1px solid var(--border-glass-secondary-light);
 }
 
 .global-top__stat-value {
@@ -196,8 +196,8 @@
   gap: var(--gap-md);
   padding: clamp(1.8rem, 3vw, 2.6rem);
   border-radius: var(--radius-xl);
-  background: rgba(8, 8, 8, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--background-card-auth);
+  border: 1px solid var(--border-card-strong);
 }
 
 .global-top__auth-title {
@@ -218,8 +218,8 @@
   margin: 0;
   padding: 0.75rem 1rem;
   border-radius: var(--radius-md);
-  background: rgba(30, 115, 190, 0.2);
-  border: 1px solid rgba(30, 115, 190, 0.4);
+  background: var(--background-status-info);
+  border: 1px solid var(--border-status-info);
   font-size: 0.9rem;
 }
 
@@ -243,16 +243,16 @@
 .global-top__form-input {
   padding: 0.75rem 1rem;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(15, 15, 15, 0.9);
+  border: 1px solid var(--border-form-input);
+  background: var(--background-form-input);
   color: var(--color-text-primary);
   font-size: 0.95rem;
 }
 
 .global-top__form-input:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+  border-color: var(--border-form-input-focus);
+  box-shadow: var(--shadow-form-input-focus);
 }
 
 .global-top__form-error {
@@ -310,8 +310,8 @@
 }
 
 .global-top__submit-button {
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(60, 60, 60, 0.25) 100%);
+  border: 1px solid var(--border-cta-strong);
+  background: var(--gradient-button-light);
   color: var(--color-text-primary);
 }
 
@@ -323,8 +323,8 @@
 }
 
 .global-top__secondary-button {
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(15, 15, 15, 0.85);
+  border: 1px solid var(--border-button-dark);
+  background: var(--background-button-dark);
   color: var(--color-text-primary);
 }
 
@@ -370,8 +370,8 @@
   gap: clamp(1.8rem, 3vw, 2.6rem);
   padding: clamp(1.8rem, 3vw, 2.4rem);
   border-radius: var(--radius-xl);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(10, 10, 14, 0.9);
+  border: 1px solid var(--border-glass-secondary-light);
+  background: var(--background-glass-secondary-light);
 }
 
 .global-roadmap__tracks {
@@ -392,8 +392,8 @@
   gap: 0.25rem;
   padding: 0.9rem 1.4rem;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(12, 12, 18, 0.82);
+  border: 1px solid var(--border-roadmap-tab);
+  background: var(--background-roadmap-tab);
   color: var(--color-text-secondary);
   font-size: 0.92rem;
   letter-spacing: 0.01em;
@@ -403,9 +403,9 @@
 
 .global-roadmap__tab.is-active,
 .global-roadmap__tab[aria-selected="true"] {
-  border-color: rgba(255, 255, 255, 0.28);
+  border-color: var(--color-border-white-28);
   color: var(--color-text-primary);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-roadmap-tab-active);
 }
 
 .global-roadmap__tab-label {
@@ -423,9 +423,9 @@
 }
 
 .global-roadmap__track {
-  background: rgba(14, 14, 20, 0.92);
+  background: var(--background-roadmap-track);
   border-radius: var(--radius-xl);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-glass-secondary-light);
   padding: clamp(1.6rem, 3vw, 2.2rem);
   display: grid;
   gap: clamp(1.3rem, 3vw, 1.7rem);
@@ -442,12 +442,12 @@
   justify-content: center;
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-border-white-14);
+  background: var(--background-roadmap-badge);
   font-size: 0.75rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(214, 220, 235, 0.82);
+  color: var(--color-roadmap-badge-text);
 }
 
 .global-roadmap__title {
@@ -465,21 +465,22 @@
 .global-roadmap__lessons {
   --roadmap-card-min: 240px;
   --roadmap-card-gap: clamp(1.2rem, 2.6vw, 1.6rem);
+  --roadmap-card-row: clamp(220px, 32vw, 260px);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--roadmap-card-min), 1fr));
-  grid-auto-rows: minmax(220px, auto);
+  grid-auto-rows: var(--roadmap-card-row);
   gap: var(--roadmap-card-gap);
 }
 
 .global-roadmap__card {
   position: relative;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(12, 12, 18, 0.9);
+  border: 1px solid var(--border-card-strong);
+  background: var(--background-roadmap-card);
   padding: clamp(1rem, 2.6vw, 1.3rem);
   transition: var(--transition-base);
   overflow: hidden;
-  min-height: 210px;
+  min-height: var(--roadmap-card-row);
   transform-origin: center top;
   will-change: transform, box-shadow;
   height: 100%;
@@ -487,9 +488,8 @@
 
 .global-roadmap__card:hover,
 .global-roadmap__card:focus-within {
-  border-color: rgba(255, 255, 255, 0.16);
-  transform: translateY(-6px) scale(1.06);
-  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.6);
+  border-color: var(--color-border-white-16);
+  box-shadow: var(--shadow-roadmap-card-hover);
   z-index: 10;
 }
 
@@ -505,14 +505,15 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: clamp(1.6rem, 4vw, 2.2rem);
-  background: linear-gradient(155deg, rgba(184, 22, 22, 0.97), rgba(64, 9, 9, 0.92));
+  padding: clamp(1.4rem, 3.4vw, 2rem);
+  background: var(--gradient-roadmap-overlay);
   color: var(--color-text-primary);
   opacity: 0;
-  transform: translateY(16px) scale(0.94);
+  transform: translateY(16px);
   pointer-events: none;
   transition: opacity var(--transition-base), transform var(--transition-base);
   overflow-y: auto;
+  max-height: 100%;
 }
 
 .global-roadmap__overlay-header {
@@ -524,18 +525,20 @@
   font-size: 0.78rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--color-overlay-code);
 }
 
 .global-roadmap__overlay-title {
   margin: 0;
-  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  font-size: clamp(1.12rem, 2.3vw, 1.34rem);
+  font-weight: 700;
 }
 
 .global-roadmap__overlay-description {
   margin: 0;
   line-height: 1.7;
-  color: rgba(255, 245, 240, 0.92);
+  color: var(--color-overlay-description);
+  font-size: 0.95rem;
 }
 
 .global-roadmap__overlay-meta {
@@ -545,13 +548,14 @@
   padding: 0;
   list-style: none;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--color-overlay-meta);
 }
 
 .global-roadmap__overlay-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
+  margin-bottom: 0.4rem;
 }
 
 .global-roadmap__overlay-tag {
@@ -559,8 +563,8 @@
   align-items: center;
   padding: 0.25rem 0.65rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.9);
+  background: var(--background-overlay-tag);
+  color: var(--color-overlay-tag);
   font-size: 0.78rem;
   letter-spacing: 0.02em;
 }
@@ -570,23 +574,66 @@
   gap: 0.6rem;
 }
 
-.global-roadmap__card:hover .global-roadmap__card-content,
-.global-roadmap__card:focus-within .global-roadmap__card-content {
-  opacity: 0;
+.global-roadmap__link--secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-overlay-secondary);
+  background: var(--background-overlay-secondary);
+  color: var(--color-text-primary);
+  font-size: 0.88rem;
+  cursor: pointer;
 }
 
-.global-roadmap__card:hover .global-roadmap__card-overlay,
-.global-roadmap__card:focus-within .global-roadmap__card-overlay {
+.global-roadmap__link--secondary i[data-lucide] {
+  width: 16px;
+  height: 16px;
+}
+
+.global-roadmap__link--secondary:focus-visible {
+  outline: 2px solid var(--color-border-white-40);
+  outline-offset: 2px;
+}
+
+.global-roadmap__card.is-expanded {
+  border-color: var(--border-overlay-secondary);
+  box-shadow: var(--shadow-roadmap-card-expanded);
+}
+
+.global-roadmap__card.is-expanded .global-roadmap__card-content {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.global-roadmap__card.is-expanded [data-roadmap-toggle] span {
+  content: '閉じる';
+}
+
+.global-roadmap__card.is-expanded .global-roadmap__card-overlay {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
   pointer-events: auto;
 }
 
+.global-roadmap__card.is-expanded [data-roadmap-toggle] {
+  border-color: var(--color-border-white-36, rgba(255, 255, 255, 0.36));
+}
+
+.global-roadmap__card.is-expanded [data-roadmap-toggle] i[data-lucide] {
+  transform: rotate(180deg);
+}
+
+.global-roadmap__card.is-expanded [data-roadmap-details] {
+  scrollbar-width: thin;
+}
+
 @media (min-width: 1024px) {
-  .global-roadmap__card:hover,
-  .global-roadmap__card:focus-within {
-    grid-column: span 2;
+  .global-roadmap__card.is-expanded {
+    grid-column: span 1;
     grid-row: span 2;
+    min-height: calc(var(--roadmap-card-row) * 2 + var(--roadmap-card-gap));
   }
 }
 
@@ -630,7 +677,7 @@
   font-size: 0.78rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(189, 198, 225, 0.72);
+  color: var(--color-roadmap-code);
 }
 
 .global-roadmap__lesson {
@@ -656,16 +703,16 @@
   gap: 0.4rem;
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(18, 18, 24, 0.85);
+  border: 1px solid var(--color-border-white-12);
+  background: var(--background-roadmap-chip);
   font-size: 0.8rem;
-  color: rgba(215, 219, 236, 0.78);
+  color: var(--color-roadmap-chip-text);
 }
 
 .global-roadmap__chip--accent {
-  border-color: rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  border-color: var(--border-overlay-secondary);
+  background: var(--background-roadmap-chip-accent);
+  color: var(--color-text-primary);
 }
 
 .global-roadmap__actions {
@@ -680,8 +727,8 @@
   gap: 0.45rem;
   padding: 0.55rem 0.9rem;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(18, 20, 28, 0.88);
+  border: 1px solid var(--color-border-white-14);
+  background: var(--background-roadmap-link);
   color: inherit;
   text-decoration: none;
   font-size: 0.88rem;
@@ -694,13 +741,13 @@
 
 .global-roadmap__link:hover,
 .global-roadmap__link:focus-visible {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--color-border-white-20);
   transform: translateY(-2px);
 }
 
 .global-roadmap__link--ghost {
-  border-color: rgba(255, 255, 255, 0.08);
-  background: rgba(12, 12, 18, 0.82);
+  border-color: var(--color-border-white-08);
+  background: var(--background-roadmap-tab);
 }
 
 @media (max-width: 768px) {
@@ -730,17 +777,17 @@
   gap: 0.2rem;
   padding: 0.85rem 1.4rem;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(12, 12, 12, 0.85);
+  border: 1px solid var(--border-roadmap-tab);
+  background: var(--background-panel-dark);
   color: var(--color-text-secondary);
   cursor: pointer;
   transition: var(--transition-base);
 }
 
 .global-top__tab.is-active {
-  border-color: rgba(255, 255, 255, 0.28);
+  border-color: var(--color-border-white-28);
   color: var(--color-text-primary);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--shadow-platform-button);
 }
 
 .global-top__tab-label {
@@ -764,8 +811,8 @@
   gap: var(--gap-lg);
   padding: clamp(1.8rem, 3vw, 2.4rem);
   border-radius: var(--radius-xl);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(8, 8, 8, 0.92);
+  border: 1px solid var(--border-card-strong);
+  background: var(--background-card-auth);
 }
 
 .global-top__panel.is-active {
@@ -811,7 +858,7 @@
   position: relative;
   height: 6px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--background-progress-track);
 }
 
 .global-top__panel-progress-meter::after {
@@ -836,8 +883,8 @@
   gap: 1rem;
   padding: 1.6rem;
   border-radius: var(--radius-lg);
-  background: rgba(12, 12, 12, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--background-panel-dark);
+  border: 1px solid var(--border-card-strong);
 }
 
 .global-top__lesson-header {
@@ -889,14 +936,14 @@
   gap: 0.35rem;
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--color-border-white-12);
   font-size: 0.8rem;
   color: var(--color-text-muted);
 }
 
 .global-top__badge--accent {
   color: var(--color-text-primary);
-  border-color: rgba(255, 255, 255, 0.24);
+  border-color: var(--color-border-white-24, rgba(255, 255, 255, 0.24));
 }
 
 .global-top__lesson-links {
@@ -911,8 +958,8 @@
   gap: 0.5rem;
   padding: 0.65rem 1.1rem;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(15, 15, 15, 0.85);
+  border: 1px solid var(--color-border-white-16);
+  background: var(--background-button-dark);
   color: var(--color-text-primary);
   text-decoration: none;
   font-size: 0.9rem;

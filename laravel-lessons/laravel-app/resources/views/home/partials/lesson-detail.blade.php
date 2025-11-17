@@ -1,4 +1,11 @@
-@include('home.partials._curriculum-data')
+@php
+  $curriculumHome = $curriculumHome ?? route('home');
+  $curriculumTiers = collect($curriculumTiers ?? \App\Support\CurriculumCatalog::all())
+    ->map(function ($tier) {
+      return $tier instanceof \Illuminate\Support\Collection ? $tier->toArray() : (array) $tier;
+    })
+    ->all();
+@endphp
 
 <section class="catalog-detail" aria-labelledby="catalog-detail-title">
   <div class="catalog-section-header">

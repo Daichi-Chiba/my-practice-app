@@ -9,7 +9,7 @@ class LessonHeroExtractor
     /** @var array<string, array|null> */
     private static array $cache = [];
 
-    public static function extract(?string $lessonNumber): ?array
+    public static function extract(?string $lessonNumber, string $tier = 'beginner'): ?array
     {
         if (is_null($lessonNumber) || $lessonNumber === '') {
             return null;
@@ -17,18 +17,25 @@ class LessonHeroExtractor
 
         $normalized = static::normalizeNumber($lessonNumber);
 
-        if (array_key_exists($normalized, self::$cache)) {
-            return self::$cache[$normalized];
+        $cacheKey = $tier . '|' . $normalized;
+        if (array_key_exists($cacheKey, self::$cache)) {
+            return self::$cache[$cacheKey];
         }
 
-        $path = resource_path('views/lessons/partials/lesson' . $normalized . '/01-hero.blade.php');
-        if (!is_file($path)) {
-            return self::$cache[$normalized] = null;
+        $candidatePaths = [
+            resource_path('views/LaravelLesson/' . $tier . '/lesson' . $normalized . '/01-hero.blade.php'),
+            resource_path('views/lessons/partials/lesson' . $normalized . '/01-hero.blade.php'), // legacy fallback
+        ];
+
+        $path = collect($candidatePaths)->first(fn ($candidate) => is_file($candidate));
+
+        if (! $path) {
+            return self::$cache[$cacheKey] = null;
         }
 
         $contents = file_get_contents($path);
         if ($contents === false) {
-            return self::$cache[$normalized] = null;
+            return self::$cache[$cacheKey] = null;
         }
 
         $title = static::matchSingle($contents, '/<h1[^>]*class="[^"]*lesson__title[^"]*"[^>]*>(.*?)<\/h1>/si');
@@ -40,7 +47,7 @@ class LessonHeroExtractor
         $metaItems = array_map([static::class, 'cleanText'], $metaItems);
         $tags = array_map([static::class, 'cleanText'], $tags);
 
-        return self::$cache[$normalized] = [
+        return self::$cache[$cacheKey] = [
             'number' => $normalized,
             'title' => static::cleanText($title),
             'subtitle' => static::cleanText($subtitle),
